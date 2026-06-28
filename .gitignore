@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+
+.ipynb_checkpoints/
+
+checkpoints/
+
+results/gifs/*.gif
+
+results/plots/*.png
+
+.venv/
+venv/
+
+.idea/
+.vscode/

@@ -1,0 +1,13 @@
+torch
+torchvision
+
+gymnasium
+minigrid
+
+numpy
+matplotlib
+pandas
+
+imageio
+open_clip_torch
+tqdm
