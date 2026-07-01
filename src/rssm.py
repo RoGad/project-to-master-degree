@@ -19,6 +19,21 @@ class Encoder(nn.Module):
     def forward(self,x):
         return self.net(x)
 
+class Decoder(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc = nn.Linear(config.DETER_DIM + config.STOCH_DIM, 1024)
+        self.net = nn.Sequential(
+            nn.ConvTranspose2d(1024, 128, 5, 2), nn.ReLU(),
+            nn.ConvTranspose2d(128, 64, 5, 2),   nn.ReLU(),
+            nn.ConvTranspose2d(64, 32, 6, 2),    nn.ReLU(),
+            nn.ConvTranspose2d(32, 3, 6, 2),
+        )
+
+    def forward(self, feat):
+        h = self.fc(feat).view(-1, 1024, 1, 1)
+        return self.net(h)
+
 class RSSMCore(nn.Module):
     def __init__(self, embed_dim):
         super().__init__()
