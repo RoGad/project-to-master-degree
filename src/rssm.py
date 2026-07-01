@@ -75,3 +75,40 @@ class RSSMCore(nn.Module):
         else:
             stoch = prior_mean
         return deter, stoch
+
+class RewardHead(nn.Module):
+    def __init__(self):
+        super().__init__()
+        h = config.HIDDEN_DIM
+        self.net = nn.Sequential(
+            nn.Linear(config.DETER_DIM + config.STOCH_DIM, h), nn.ELU(), nn.Linear(h, 1))
+
+    def forward(self, feat):
+        return self.net(feat).squeeze(-1)
+
+
+class RSSM(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.encoder = Encoder()
+        self.core = RSSMCore(self.encoder.embed_dim)
+        self.decoder = Decoder()
+        self.reward_head = RewardHead()
+
+    def encode(self, obs):
+        return self.encoder(obs)
+
+    def decode(self, deter, stoch):
+        return self.decoder(torch.cat([deter, stoch], -1))
+
+    def predict_reward(self, deter, stoch):
+        return self.reward_head(torch.cat([deter, stoch], -1))
+
+    def initial_state(self, batch_size):
+        return self.core.initial_state(batch_size)
+
+    def obs_step(self, prev_stoch, prev_action, prev_deter, embed):
+        return self.core.obs_step(prev_stoch, prev_action, prev_deter, embed)
+
+    def img_step(self, prev_stoch, prev_action, prev_deter, sample=False):
+        return self.core.img_step(prev_stoch, prev_action, prev_deter, sample)
