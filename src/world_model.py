@@ -57,3 +57,12 @@ def train_world_model(wm, buffer, steps=None, log_every=200):
         if it % log_every == 0 or it == steps - 1:
             print(f"шаг {it:4d} | recon {info['recon']:.1f} | kl {info['kl']:.2f} | reward {info['reward']:.4f}")
     return wm
+
+@torch.no_grad()
+def imagine_rollout(wm, deter, stoch, action_seqs):
+    states = []
+    for t in range(action_seqs.shape[1]):
+        a = F.one_hot(action_seqs[:, t], config.NUM_ACTIONS).float()
+        deter, stoch = wm.img_step(stoch, a, deter)
+        states.append((deter, stoch))
+    return states
