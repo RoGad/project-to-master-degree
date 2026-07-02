@@ -28,3 +28,11 @@ class CLIPScorer:
         feat = feat / feat.norm(dim=-1, keepdim=True)
         logits = self.model.logit_scale.exp() * (feat @ self.text_feat.T)  # (M,2): [цель, негатив]
         return logits.softmax(-1)[:, 0]  # вероятность 'цель'
+
+    @torch.no_grad()
+    def score_rollout(self, wm, states):
+        score = torch.zeros(states[0][0].shape[0], device=config.DEVICE)
+        for deter, stoch in states[-config.SCORE_LAST_K:]:
+            frames = (wm.decode(deter, stoch) + 0.5).clamp(0, 1)
+            score = torch.maximum(score, self.score_frames(frames))
+        return score
