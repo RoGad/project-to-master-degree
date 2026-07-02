@@ -25,10 +25,10 @@ NUM_CANDIDATES = 150
 HORIZON = 10
 SCORE_LAST_K = 3
 
-CLIP_MODEL = "ViT-B-32"
+CLIP_MODEL = "ViT-B-16"
 CLIP_PRETRAINED = "openai"
-GOAL_PROMPT = "the red agent is on the green goal square"
-NEG_PROMPT = "the red agent is far away from the green goal"
+GOAL_PROMPT = "a top-down view of a grid world with a red agent standing on a green goal tile"
+NEG_PROMPT = "a top-down view of a grid world where the red agent is far from the green goal tile"
 
 EVAL_EPISODES = 15
 EVAL_SEEDS = [0, 1, 2]
