@@ -26,3 +26,28 @@ def make_vlm_objective(wm, scorer):
     def objective(states):
         return scorer.score_rollout(wm, states)
     return objective
+
+class Agent:
+    def __init__(self, wm, objective):
+        self.wm = wm
+        self.objective = objective
+        self.deter = None
+        self.stoch = None
+
+    @torch.no_grad()
+    def reset(self, obs):
+        self.deter, self.stoch = self.wm.initial_state(1)
+        zero_action = torch.zeros(1, config.NUM_ACTIONS, device=config.DEVICE)
+        embed = self.wm.encode(preprocess(obs))
+        self.deter, self.stoch, _, _ = self.wm.obs_step(self.stoch, zero_action, self.deter, embed)
+
+    @torch.no_grad()
+    def act(self):
+        return plan(self.wm, self.deter, self.stoch, self.objective)
+
+    @torch.no_grad()
+    def observe(self, action, obs):
+        pa = F.one_hot(torch.tensor([config.ACTIONS.index(action)], device=config.DEVICE),
+                       config.NUM_ACTIONS).float()
+        embed = self.wm.encode(preprocess(obs))
+        self.deter, self.stoch, _, _ = self.wm.obs_step(self.stoch, pa, self.deter, embed)
