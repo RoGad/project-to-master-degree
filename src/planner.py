@@ -20,3 +20,9 @@ def make_reward_objective(wm):
     def objective(states):
         return sum(wm.predict_reward(d, s) for d, s in states)
     return objective
+
+def make_vlm_objective(wm, scorer):
+    @torch.no_grad()
+    def objective(states):
+        return scorer.score_rollout(wm, states)
+    return objective
