@@ -25,7 +25,7 @@ NUM_CANDIDATES = 150
 HORIZON = 10
 SCORE_LAST_K = 3
 
-CLIP_MODEL = "ViT-B-16"
+CLIP_MODEL = "ViT-B-16-quickgelu"
 CLIP_PRETRAINED = "openai"
 GOAL_PROMPT = "a top-down view of a grid world with a red agent standing on a green goal tile"
 NEG_PROMPT = "a top-down view of a grid world where the red agent is far from the green goal tile"
