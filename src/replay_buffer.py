@@ -26,8 +26,8 @@ class ReplayBuffer:
 
 def collect_random(buffer, num_episodes, seed0=0):
     rng = np.random.default_rng(config.SEED)
+    env = make_env()
     for e in range(num_episodes):
-        env = make_env()
         obs, _ = env.reset(seed=seed0 + e)
         frames, actions, rewards = [obs], [], []
         done = False
@@ -38,6 +38,6 @@ def collect_random(buffer, num_episodes, seed0=0):
             actions.append(action)
             rewards.append(reward)
             done = terminated or truncated
-        env.close()
         buffer.add_episode(frames, actions, rewards)
+    env.close()
     return buffer
