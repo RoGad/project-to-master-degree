@@ -58,6 +58,15 @@ def evaluate_method(wm, method, scorer=None):
     env.close()
     return per_seed
 
+def evaluate_all(wm, scorer):
+    rows = []
+    for method in ["random", "reward", "vlm"]:
+        sc = scorer if method == "vlm" else None
+        per_seed = evaluate_method(wm, method, sc)
+        rows.append((METHOD_NAMES[method], float(np.mean(per_seed)), float(np.std(per_seed))))
+        print(f"{METHOD_NAMES[method]:32s} success_rate = {np.mean(per_seed):.2f}")
+    return pd.DataFrame(rows, columns=["method", "success_rate", "std"])
+
 def record_gif(wm, method, seed, path, scorer=None):
     env = make_env(eval_max_steps=config.EVAL_MAX_STEPS)
     obs, _ = env.reset(seed=seed)
