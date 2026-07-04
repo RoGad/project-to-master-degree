@@ -45,12 +45,14 @@ def sample_batch(buffer):
     return frames, torch.stack(actions_list).to(config.DEVICE), torch.stack(rewards_list).to(config.DEVICE)
 
 
-def train_world_model(wm, buffer, steps=None, log_every=200):
+def train_world_model(wm, buffer, steps=None, log_every=200, history=None):
     steps = steps or config.TRAIN_STEPS
     opt = torch.optim.Adam(wm.parameters(), config.LEARNING_RATE)
     for it in range(steps):
         frames, prev_actions, rewards = sample_batch(buffer)
         total, info = compute_loss(wm, frames, prev_actions, rewards)
+        if history is not None:
+            history.append({"step": it, **info})
         opt.zero_grad(); total.backward()
         nn.utils.clip_grad_norm_(wm.parameters(), config.GRAD_CLIP)
         opt.step()
