@@ -81,8 +81,11 @@ Python 3.10+. Для обучения нужен GPU (Colab T4 достаточ�
 - **Точность воображения:** декодер уверенно рисует ящик лишь на ~3 шага вперёд, дальше CLIP-у нечего оценивать (подтверждено ablation по горизонту).
 
 ## Ссылки
-
-- Hafner et al., *Learning Latent Dynamics for Planning from Pixels* (PlaNet), ICML 2019
-- Hafner et al., *Dream to Control: Learning Behaviors by Latent Imagination* (Dreamer), ICLR 2020
-- Radford et al., *Learning Transferable Visual Models From Natural Language Supervision* (CLIP), ICML 2021
-- Chevalier-Boisvert et al., *Minigrid & Miniworld: Modular & Customizable RL Environments*, 2023
+1. Radford A., Kim J. W., Hallacy C. [и др.] Learning Transferable Visual Models From Natural Language Supervision // Proceedings of the 38th International Conference on Machine Learning (ICML). — 2021. — URL: https://arxiv.org/abs/2103.00020 
+2. Fan L., Wang G., Jiang Y. [и др.] MineDojo: Building Open-Ended Embodied Agents with Internet-Scale Knowledge // Advances in Neural Information Processing Systems 35 (NeurIPS). — 2022. — URL: https://arxiv.org/abs/2206.08853 
+3. Rocamonde J., Montesinos V., Nava E., Perez E., Lindner D. Vision-Language Models are Zero-Shot Reward Models for Reinforcement Learning // International Conference on Learning Representations (ICLR). — 2024. — URL: https://arxiv.org/abs/2310.12921 
+4. Ha D., Schmidhuber J. Recurrent World Models Facilitate Policy Evolution // Advances in Neural Information Processing Systems 31 (NeurIPS). — 2018. — URL: https://arxiv.org/abs/1809.01999 
+5. Hafner D., Lillicrap T., Fischer I. [и др.] Learning Latent Dynamics for Planning from Pixels // Proceedings of the 36th International Conference on Machine Learning (ICML). — 2019. — URL: https://arxiv.org/abs/1811.04551
+6. Hafner D., Lillicrap T., Ba J., Norouzi M. Dream to Control: Learning Behaviors by Latent Imagination // International Conference on Learning Representations (ICLR). — 2020. — URL: https://arxiv.org/abs/1912.01603 
+7. Chua K., Calandra R., McAllister R., Levine S. Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models // Advances in Neural Information Processing Systems 31 (NeurIPS). — 2018. — URL: https://arxiv.org/abs/1805.12114 
+8. Chevalier-Boisvert M., Dai B., Towers M. [и др.] Minigrid & Miniworld: Modular & Customizable Reinforcement Learning Environments for Goal-Oriented Tasks // Advances in Neural Information Processing Systems 36 (NeurIPS). — 2023. — URL: https://arxiv.org/abs/2306.13831
